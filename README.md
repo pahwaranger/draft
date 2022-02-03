@@ -14,14 +14,15 @@ The scripts will test all possible solutions for the given draft type, compute a
 
 The snake draft works by mirroring the order at the end of each round. So the last period is round 1 goes first in round 2 and the last person in round 2 goes first in round 3.
 
-Perpetual snake draft logic continues to mirror for however many rounds there are. Meaning the first 4 rounds would be:
+Perpetual snake draft logic continues to mirror for however many rounds there are.
+Meaning the first 4 rounds would be:
  `[A, B, C], [C, B, A], [A, B, C], [C, B, A]`
 
 ### Temporary Snake Draft
 
 `temporary_snake_draft.py` follows the same approach as described above for Perpetual Snake Draft. However, temporary snake draft logic only mirrors the 2nd round.
 
-Meaning if the first 4 rounds would be:
+Meaning the first 4 rounds would be:
  `[A, B, C], [C, B, A], [A, B, C], [A, B, C]`
 
 ### Linear Draft
@@ -30,7 +31,7 @@ Meaning if the first 4 rounds would be:
 
 In a linear draft approach, the order never changes and at the end of each round, you simply start over again at the beginning.
 
-Meaning if the first 4 rounds would be:
+Meaning the first 4 rounds would be:
  `[A, B, C], [A, B, C], [A, B, C], [A, B, C]`
 
 ## Setup
@@ -232,4 +233,5 @@ starter:
 ```
 
 Make sure to lint your code before pushing change.
+
 We are enforcing >70% code coverage.
