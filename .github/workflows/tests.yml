@@ -1,0 +1,53 @@
+name: Tests
+
+'on':
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+    workflow_dispatch: {}
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python_version: ['3.8.8', '3.8.10', '3.9']
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
+
+            - name: Set up python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: ${{ matrix.python_version }}
+
+            - name: Install and Configure Poetry
+              run: |
+                  curl -sSL https://install.python-poetry.org | python3 -
+                  poetry config virtualenvs.in-project true  # setup .venv locally for caching
+            - name: Load cached venv
+              id: cached-poetry-dependencies
+              uses: actions/cache@v2
+              with:
+                  path: .venv
+                  key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+            - name: Install dependencies
+              if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+              run: poetry install --no-interaction --no-root
+
+            - name: Test with pytest
+              run: make _generate_coverage_ci
+
+            - name: Upload coverage
+              uses: codecov/codecov-action@v2.1.0
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  files: ./coverage.xml
+                  fail_ci_if_error: true
+                  flags: ${{ matrix.python_version }}
+
+            - name: Verify min coverage
+              run:
+                  make _check_coverage_ci
