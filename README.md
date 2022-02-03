@@ -3,6 +3,7 @@
 [![MIT license](https://badgen.net/pypi/license/pip/)](https://github.com/pahwaranger/draft/blob/master/LICENSE)
 [![Tests Status](https://github.com/pahwaranger/draft/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/tests.yml?query=event%3Apush+branch%3Amaster)
 [![Lint Status](https://github.com/pahwaranger/draft/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/lint.yml?query=event%3Apush+branch%3Amaster)
+[![codecov](https://codecov.io/gh/pahwaranger/draft/branch/master/graph/badge.svg?token=XKJCUV0DY5)](https://codecov.io/gh/pahwaranger/draft)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 Brute-force drafting tools.
 
