@@ -5,16 +5,38 @@ from draft.utils import utils
 
 
 class TestUtils:
-    def test_draft_order(self):
+    def test_temporary_snake_order(self):
         people = ['A', 'B', 'C']
         rounds = 1
-        result1 = utils.draft_order(people, rounds)
+        result1 = utils.temporary_snake_order(people, rounds)
         expected1 = ['A', 'B', 'C']
         assert result1 == expected1
 
         rounds = 2
-        result2 = utils.draft_order(people, rounds)
+        result2 = utils.temporary_snake_order(people, rounds)
         expected2 = ['A', 'B', 'C', 'C', 'B', 'A']
+        assert result2 == expected2
+
+        rounds = 4
+        result2 = utils.temporary_snake_order(people, rounds)
+        expected2 = ['A', 'B', 'C', 'C', 'B', 'A', 'A', 'B', 'C', 'A', 'B', 'C']
+        assert result2 == expected2
+
+    def test_perpetual_snake_order(self):
+        people = ['A', 'B', 'C']
+        rounds = 1
+        result1 = utils.perpetual_snake_order(people, rounds)
+        expected1 = ['A', 'B', 'C']
+        assert result1 == expected1
+
+        rounds = 2
+        result2 = utils.perpetual_snake_order(people, rounds)
+        expected2 = ['A', 'B', 'C', 'C', 'B', 'A']
+        assert result2 == expected2
+
+        rounds = 4
+        result2 = utils.perpetual_snake_order(people, rounds)
+        expected2 = ['A', 'B', 'C', 'C', 'B', 'A', 'A', 'B', 'C', 'C', 'B', 'A']
         assert result2 == expected2
 
     def test_get_first_preference(self):
@@ -65,3 +87,16 @@ class TestUtils:
         df = pandas.DataFrame([[1, 2], [3, 4]], columns=['A', 'B'])
         with pytest.raises(IndexError):
             utils.get_priority(df, 'A', 2)
+
+    def test_get_all_linear_draft_permutations(self):
+        order = [1]
+        permutations = utils.get_all_linear_draft_permutations(order)
+        assert permutations == [[1]]
+
+        order = [1, 2]
+        permutations = utils.get_all_linear_draft_permutations(order)
+        assert permutations == [[1, 2], [2, 1]]
+
+        order = [1, 2, 3, 4]
+        permutations = utils.get_all_linear_draft_permutations(order)
+        assert permutations == [[1, 2, 3, 4], [2, 3, 4, 1], [3, 4, 1, 2], [4, 1, 2, 3]]

@@ -7,9 +7,22 @@ def get_first_preference(person, reserved_items):
     except IndexError:
         return None
 
-def draft_order(people, rounds, cur_round=1):
+def linear_order(people, rounds, cur_round=1):
     if cur_round<rounds:
-        return people + draft_order(people=people[::-1], rounds=rounds, cur_round=cur_round+1)
+        return people + linear_order(people=people, rounds=rounds, cur_round=cur_round+1)
+    else:
+        return people
+
+def temporary_snake_order(people, rounds, cur_round=1):
+    if cur_round<rounds:
+        maybe_reverse = people[::-1] if cur_round<=2 else people
+        return people + temporary_snake_order(people=maybe_reverse, rounds=rounds, cur_round=cur_round+1)
+    else:
+        return people
+
+def perpetual_snake_order(people, rounds, cur_round=1):
+    if cur_round<rounds:
+        return people + perpetual_snake_order(people=people[::-1], rounds=rounds, cur_round=cur_round+1)
     else:
         return people
 
@@ -27,5 +40,11 @@ def compute_fairness(all_assignments):
         person: sum(assignment[1] for assignment in assignments)
         for person, assignments in all_assignments.items()
     }
-    logging.debug(scoring)
+    logging.debug(f"Scores: {scoring}")
     return statistics.stdev(scoring.values())
+
+def get_all_linear_draft_permutations(people):
+    return [
+        people[i:] + people[:i]
+        for i in range(len(people))
+    ]

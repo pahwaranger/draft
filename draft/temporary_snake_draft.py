@@ -11,7 +11,7 @@ from draft.utils import utils
 def determine_assignments_for_sorting(df, people, items_per_person):
     assignments = {}
     reserved_items = []
-    for person in utils.draft_order(people, items_per_person):
+    for person in utils.temporary_snake_order(people, items_per_person):
         if person not in assignments:
             assignments[person] = []
         item = utils.get_first_preference(df[person], reserved_items=reserved_items)
@@ -32,7 +32,7 @@ def permute_draft_order(df):
         assignments = determine_assignments_for_sorting(df, sorting, items_per_person)
         logging.debug(f"Assignments: {assignments}")
         fairness = utils.compute_fairness(assignments)
-        logging.debug(f"Fairness: {fairness}")
+        logging.debug(f"Fairness: {fairness}\n")
         attempts.append((fairness, assignments))
     return attempts
 
