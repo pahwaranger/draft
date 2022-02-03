@@ -41,20 +41,25 @@ def get_fairest_attempt(attempts):
 
 
 @click.command()
-@click.option('--file_path', default="test/data/draft_zero.csv", prompt='Path to CVS file', help='Path to CSV file.')
-@click.option('--verbose', is_flag=True, default=False, help="Verbose mode.")
+@click.option(
+    "--file_path",
+    default="test/data/draft_zero.csv",
+    prompt="Path to CVS file",
+    help="Path to CSV file.",
+)
+@click.option("--verbose", is_flag=True, default=False, help="Verbose mode.")
 def main(file_path, verbose):
     if verbose:
-        logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.DEBUG)
         logging.info("Set debug level to DEBUG")
     else:
-        logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+        logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
     df = pandas.read_csv(file_path)
     fairness, assignments = get_fairest_attempt(permute_draft_order(df))
-    print(f'fairness score: {fairness}')
+    print(f"fairness score: {fairness}")
     for person, assignment in assignments.items():
-        one_line = ', '.join([item[0] for item in assignment])
-        print(f'{person}: {one_line}')
+        one_line = ", ".join([item[0] for item in assignment])
+        print(f"{person}: {one_line}")
 
 
 if __name__ == "__main__":

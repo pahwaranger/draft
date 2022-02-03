@@ -1,0 +1,13 @@
+---
+name: Lint
+
+'on': [push, pull_request]
+
+jobs:
+    python_lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: psf/black@stable
+              with:
+                black_args: ". --line-length 120 --check --diff"
