@@ -1,10 +1,7 @@
 # Draft
 
-[![MIT license](https://badgen.net/pypi/license/pip/)](https://github.com/pahwaranger/draft/blob/master/LICENSE)
-[![Tests Status](https://github.com/pahwaranger/draft/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/tests.yml?query=event%3Apush+branch%3Amaster)
-[![Lint Status](https://github.com/pahwaranger/draft/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/lint.yml?query=event%3Apush+branch%3Amaster)
-[![codecov](https://codecov.io/gh/pahwaranger/draft/branch/master/graph/badge.svg?token=XKJCUV0DY5)](https://codecov.io/gh/pahwaranger/draft)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+ [![MIT license](https://badgen.net/pypi/license/pip/)](https://github.com/pahwaranger/draft/blob/master/LICENSE) [![Tests Status](https://github.com/pahwaranger/draft/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/tests.yml?query=event%3Apush+branch%3Amaster) [![Lint Status](https://github.com/pahwaranger/draft/workflows/Lint/badge.svg?branch=master&event=push)](https://github.com/pahwaranger/draft/actions/workflows/lint.yml?query=event%3Apush+branch%3Amaster) [![codecov](https://codecov.io/gh/pahwaranger/draft/branch/master/graph/badge.svg?token=XKJCUV0DY5)](https://codecov.io/gh/pahwaranger/draft) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 Brute-force drafting tools.
 
 ## Draft types
@@ -38,11 +35,21 @@ Meaning if the first 4 rounds would be:
 
 ## Setup
 
+Recommended
+```sh
+> make setup
+```
+
+or
+
+Manual
 ```sh
 > curl -sSL https://install.python-poetry.org | python3 -
 > poetry config virtualenvs.in-project true
 > poetry install
 ```
+
+
 
 ## Usage
 
@@ -196,3 +203,33 @@ john: item 2
 casey: item 3
 lynn: item 4, item 6
 ```
+
+## Development
+
+We are using [Poetry](https://python-poetry.org/) to manage environments.
+
+Install Poetry and setup local environment with
+
+```sh
+make setup
+```
+
+Use the `make` command to see common dev commands
+
+```sh
+$ make
+usage: make [command]
+
+common:
+  tests                Run tests.
+  coverage             Generate local HTML coverage report and open it.
+  lint                 Runs all linters, when possible the linter will automatically reformat the file for you.
+  ci                   Runs everything CI typically does. Can/should run this prior to pushing new commits.
+
+starter:
+  help                 Show this help.
+  setup                Initial env setup.
+```
+
+Make sure to lint your code before pushing change.
+We are enforcing >70% code coverage.
