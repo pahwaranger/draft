@@ -1,10 +1,13 @@
+import math
 import logging
 import statistics
 
 
 def get_first_preference(person, reserved_items):
+    """gets person's most prefered item after removing any already claimed items"""
     try:
-        return person[~person.isin(reserved_items)].iloc[0]
+        pref = person[~person.isin(reserved_items)].iloc[0]
+        return None if isinstance(pref, float) and math.isnan(pref) else pref
     except IndexError:
         return None
 
@@ -32,14 +35,19 @@ def perpetual_snake_order(people, rounds, cur_round=1):
 
 
 def get_all_possible_items(df):
+    """gets all items listed by people and excludes nulls"""
     all_items = set()
     for col in df:
-        all_items.update(set(df[col].unique()))
+        all_items.update(set(df[col].dropna().unique()))
     return all_items
 
 
 def get_priority(df, person, item):
-    return df[df[person] == item].index[0] + 1
+    """gets a rank value for a"""
+    try:
+        return df[df[person] == item].index[0] + 1
+    except IndexError:
+        return 1
 
 
 def compute_fairness(all_assignments):

@@ -23,3 +23,8 @@ class TestTemporarySnakeDraft:
     def test_draft_three(self, df):
         fairness, assignment = temporary_snake_draft.get_fairest_attempt(temporary_snake_draft.permute_draft_order(df))
         assert fairness == 1.4142135623730951
+
+    @pytest.mark.parametrize("df", ["draft_four.csv"], indirect=["df"])
+    def test_draft_four(self, df):
+        fairness, assignment = temporary_snake_draft.get_fairest_attempt(temporary_snake_draft.permute_draft_order(df))
+        assert fairness == 1.7320508075688772

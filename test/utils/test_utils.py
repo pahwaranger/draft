@@ -88,8 +88,9 @@ class TestUtils:
         assert result2 == expected2
 
         df = pandas.DataFrame([[1, 2], [3, 4]], columns=["A", "B"])
-        with pytest.raises(IndexError):
-            utils.get_priority(df, "A", 2)
+        result3 = utils.get_priority(df, "A", 2)
+        expected3 = 1
+        assert result3 == expected3
 
     def test_get_all_linear_draft_permutations(self):
         order = [1]

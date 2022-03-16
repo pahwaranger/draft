@@ -7,10 +7,11 @@ import pandas
 from draft.utils import utils
 
 
-def determine_assignments_for_sorting(df, people, items_per_person):
+def determine_assignments_for_sorting(df, people, items_per_person, all_items):
     assignments = {}
     reserved_items = []
-    for person in utils.linear_order(people, items_per_person):
+    skipped = []
+    for person in utils.linear_order(people, items_per_person)[: len(all_items)]:
         if person not in assignments:
             assignments[person] = []
         item = utils.get_first_preference(df[person], reserved_items=reserved_items)
@@ -18,6 +19,13 @@ def determine_assignments_for_sorting(df, people, items_per_person):
             priority = utils.get_priority(df, person, item)
             reserved_items.append(item)
             assignments[person].append((item, priority))
+        else:
+            skipped.append(person)
+    for person in skipped:
+        item = sorted(list(set(all_items) - set(reserved_items)))[0]
+        priority = utils.get_priority(df, person, item)
+        reserved_items.append(item)
+        assignments[person].append((item, priority))
     return assignments
 
 
@@ -28,7 +36,7 @@ def permute_draft_order(df):
     attempts = []
     for sorting in utils.get_all_linear_draft_permutations(people):
         logging.debug(f"Attempt: {sorting}")
-        assignments = determine_assignments_for_sorting(df, sorting, items_per_person)
+        assignments = determine_assignments_for_sorting(df, sorting, items_per_person, all_items)
         logging.debug(f"Assignments: {assignments}")
         fairness = utils.compute_fairness(assignments)
         logging.debug(f"Fairness: {fairness}\n")
