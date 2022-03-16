@@ -89,7 +89,7 @@ class TestUtils:
 
         df = pandas.DataFrame([[1, 2], [3, 4]], columns=["A", "B"])
         result3 = utils.get_priority(df, "A", 2)
-        expected3 = 1
+        expected3 = 3
         assert result3 == expected3
 
     def test_get_all_linear_draft_permutations(self):

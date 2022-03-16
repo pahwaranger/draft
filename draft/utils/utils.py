@@ -47,12 +47,12 @@ def get_priority(df, person, item):
     try:
         return df[df[person] == item].index[0] + 1
     except IndexError:
-        return 1
+        return len(df[person]) + 1
 
 
 def compute_fairness(all_assignments):
     scoring = {
-        person: sum(assignment[1] for assignment in assignments) for person, assignments in all_assignments.items()
+        person: sum([assignment[1] for assignment in assignments]) for person, assignments in all_assignments.items()
     }
     logging.debug(f"Scores: {scoring}")
     return statistics.stdev(scoring.values())
